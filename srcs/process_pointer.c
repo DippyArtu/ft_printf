@@ -6,7 +6,7 @@
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/05 13:21:10 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/05 16:28:54 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/05 16:41:08 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@ static char 				*process_base(unsigned long long ull_tmp, int base,
 		count--;
 	}
 	return (out);
+}
+
+static int 					adjust_part_ptr(char *ptr, t_flags flags)
+{
+	int 					count;
+
+	count = 0;
+	count += put_str_adjusted("0x", 2);
+	if (flags.dot >= 0)
+	{
+		count += process_width(flags.dot, ft_strlen(ptr), 1);
+		count += put_str_adjusted(ptr, flags.dot);
+	}
+	else
+		count += put_str_adjusted(ptr, ft_strlen(ptr));
+	return (count);
 }
 
 char 						*ull_base(unsigned long long ull, int base)
@@ -67,4 +83,9 @@ int 						process_pointer(unsigned long long ull, t_flags flags)
 		flags.dot = ft_strlen(ptr);
 	if (flags.minus == 1)
 		count += adjust_part_ptr(ptr, flags);
+	count += process_width(flags.width, ft_strlen(ptr) + 2, 0);
+	if (flags.minus == 0)
+		count += adjust_part_ptr(ptr, flags);
+	free(ptr);
+	return (count);
 }
