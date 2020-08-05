@@ -6,11 +6,12 @@
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 18:50:27 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/05 10:45:15 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/05 11:58:59 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+//https://github.com/BenSouchet/ft-printf
+//https://github.com/rchallie/ft_printf ---
 
 #include "ft_printf.h"
 
@@ -71,12 +72,10 @@ int 				proccess_format(const char *str, va_list args)
 		{
 			i = parse_flags(str, ++i, &flags, args);
 			if (is_in_type_list(str[i]))
-				ft_putchar('!');
-				//c += process_str((char)flags.type, flags, args);
+				c += process_str((char)flags.type, flags, args);
 
 		}
 	}
-	return (0);
 }
 
 int 				ft_printf(const char *format, ...)

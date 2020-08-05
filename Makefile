@@ -6,7 +6,7 @@
 #    By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/06 17:45:47 by jsalome           #+#    #+#              #
-#    Updated: 2020/07/29 20:28:24 by Artur            ###   ########.fr        #
+#    Updated: 2020/08/05 11:16:18 by Artur            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,10 @@ NAME = libftprintf.a
 SRC_DIR = ./srcs/
 SRC = 	ft_printf.c\
 		processing.c\
-		process_flags.c
+		process_flags.c\
+		process_char.c\
+		process_width.c\
+		process_string.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

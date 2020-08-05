@@ -6,7 +6,7 @@
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 18:48:43 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/05 10:25:01 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/05 11:49:59 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,10 @@ t_flags 			flag_minus(t_flags flags);
 t_flags 			flag_width(va_list args, t_flags flags);
 t_flags 			flag_number(char c, t_flags flags);
 int 				process_str(int c, t_flags flags, va_list args);
+int 				process_width(int width, int minus, int zero);
+int 				process_char(char c, t_flags flags);
+int 				put_str_adjusted(char *str, int step);
+int 				adjust_part(char *str, t_flags flags);
+int 				process_string(char *str, t_flags flags);
 
 #endif

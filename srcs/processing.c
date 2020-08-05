@@ -6,7 +6,7 @@
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 21:44:39 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/05 10:33:12 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/05 11:58:59 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,13 @@ int 				is_in_flags_list(int c)
 	return ((c == '-') || (c == ' ') || (c == '0') || (c == '.') || (c == '8'));
 }
 
-//int 				process_str(int c, t_flags flags, va_list args)
-//{
-//
-//}
+int 				process_str(int c, t_flags flags, va_list args)
+{
+	int 			count;
+
+	count = 0;
+	if (c == 'c')
+		count = process_char(va_arg(args, int), flags);
+	else if (c == 's')
+		count = process_string(va_arg(args, char *), flags);
+}
