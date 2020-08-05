@@ -7,7 +7,6 @@ include_directories(includes)
 include_directories(libft/includes)
 
 add_executable(libft.h
-        libft/includes/get_next_line.h
         libft/srcs/ft_arrnew.c
         libft/srcs/ft_atoi.c
         libft/srcs/ft_bzero.c
@@ -80,4 +79,6 @@ add_executable(libft.h
         libft/Makefile
         includes/ft_printf.h
         srcs/ft_printf.c
+        srcs/processing.c
+        srcs/process_flags.c
         Makefile)

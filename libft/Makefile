@@ -6,7 +6,7 @@
 #    By: jsalome <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 18:19:22 by jsalome           #+#    #+#              #
-#    Updated: 2020/05/28 22:53:41 by Artur            ###   ########.fr        #
+#    Updated: 2020/07/29 20:24:25 by Artur            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,7 @@ OBJ_DIR = ./obj/
 OBJS = $(addprefix $(OBJ_DIR), $(OBJ))
 
 INC = libft.h get_next_line.h
-INC_DIR = ./includes/
+INC_DIR = ../includes/
 INCS = $(addprefix $(INC_DIR), $(INC))
 
 FLAGS = -g -Wall -Werror -Wextra -I$(INC_DIR)

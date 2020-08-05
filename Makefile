@@ -6,14 +6,16 @@
 #    By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/06 17:45:47 by jsalome           #+#    #+#              #
-#    Updated: 2020/05/30 23:51:33 by Artur            ###   ########.fr        #
+#    Updated: 2020/07/29 20:28:24 by Artur            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf
+NAME = libftprintf.a
 
 SRC_DIR = ./srcs/
-SRC = 	ft_printf.c
+SRC = 	ft_printf.c\
+		processing.c\
+		process_flags.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 
@@ -31,7 +33,7 @@ LIB_OBJ_DIR = ./libft/obj/
 LIB_OBJS = $(addprefix $(LIB_OBJ_DIR), $(LIB_OBJ))
 LIB_SRC_DIR = ./libft/srcs/
 LIB_INC = libft.h get_next_line.h
-LIB_INC_DIR = ./libft/includes/
+LIB_INC_DIR = ./includes/
 LIB_INCS = $(addprefix $(LIB_INC_DIR), $(LIB_INC))
 
 FLAGS = -g -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIB_INC_DIR)
@@ -39,8 +41,9 @@ FLAGS = -g -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIB_INC_DIR)
 all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(LIB_OBJS) $(OBJS)
-		@clang $(OBJS) ./libft/libft.a -o $(NAME)
-
+		cp libft/libft.a ./$(NAME)
+		@ar rc $(NAME) $(OBJS)
+		ranlib $(NAME)
 $(OBJ_DIR):
 		@mkdir -p $@
 		@mkdir -p $(LIB_OBJ_DIR)
