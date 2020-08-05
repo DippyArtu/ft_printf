@@ -6,7 +6,7 @@
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 18:50:27 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/05 16:42:00 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/05 19:32:32 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int 				proccess_format(const char *str, va_list args)
 {
 	int 			i;
 	t_flags			flags;
-	int 			c;
+	int 			count;
 
 	i = 0;
-	c = 0;
+	count = 0;
 	while(1)
 	{
 		flags = init_flags();
@@ -72,10 +72,15 @@ int 				proccess_format(const char *str, va_list args)
 		{
 			i = parse_flags(str, ++i, &flags, args);
 			if (is_in_type_list(str[i]))
-				c += process_str((char)flags.type, flags, args);
-
+				count += process_str((char)flags.type, flags, args);
+			else if (str[i])
+				count += ft_putchar(str[i]);
 		}
+		else if (str[i] != '%')
+			count += ft_putchar(str[i]);
+		i++;
 	}
+	return (count);
 }
 
 int 				ft_printf(const char *format, ...)

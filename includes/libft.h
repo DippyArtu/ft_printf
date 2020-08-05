@@ -6,7 +6,7 @@
 /*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 12:03:39 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/20 00:15:44 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/05 16:31:49 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-void				ft_putchar(char c);
+int 				ft_putchar(char c);
 void				ft_putendl(char const *s);
 void				ft_putstr(char const *s);
-void				ft_putnbr(int n);
+void 				ft_putnbr(int n);
 void				ft_putnbr_fd(int n, int fd);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);

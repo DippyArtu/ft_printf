@@ -3,7 +3,7 @@
 
 int		main()
 {
-	ft_putnbr(ft_printf("hello\n", 12456));
+	ft_putnbr(ft_printf("hello %s\n", "test"));
 	//printf("hello %#-0 +10.4", 10);
 
 	return(0);
