@@ -6,7 +6,7 @@
 #    By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/06 17:45:47 by jsalome           #+#    #+#              #
-#    Updated: 2020/08/05 13:21:43 by Artur            ###   ########.fr        #
+#    Updated: 2020/08/05 19:28:00 by Artur            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC = 	ft_printf.c\
 		process_width.c\
 		process_string.c\
 		process_pointer.c\
-		process_int.c
+		process_int.c\
+		process_uint.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 

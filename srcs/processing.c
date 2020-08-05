@@ -6,7 +6,7 @@
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 21:44:39 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/05 19:32:32 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/05 19:38:32 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ int 				process_str(int c, t_flags flags, va_list args)
 		count = process_pointer(va_arg(args, unsigned long long), flags);
 	else if (c == 'i' || c == 'd')
 		count = process_int(va_arg(args, int), flags);
+	else if (c == 'u')
+		count = process_uint((unsigned int)va_arg(args, unsigned int), flags);
 	return (count);
 }

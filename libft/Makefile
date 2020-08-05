@@ -6,7 +6,7 @@
 #    By: jsalome <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 18:19:22 by jsalome           #+#    #+#              #
-#    Updated: 2020/07/29 20:24:25 by Artur            ###   ########.fr        #
+#    Updated: 2020/08/05 16:28:54 by Artur            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,8 @@ SRC =       ft_arrnew.c\
             ft_skipnchars.c\
             ft_strsubptr.c\
             ft_strjoinf.c\
-            ft_str_tolower.c
+            ft_str_tolower.c\
+            ft_uint_itoa.c
 
 OBJ = $(SRC:.c=.o)
 OBJ_DIR = ./obj/

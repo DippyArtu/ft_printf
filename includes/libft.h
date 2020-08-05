@@ -6,7 +6,7 @@
 /*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 12:03:39 by jsalome           #+#    #+#             */
-/*   Updated: 2020/08/05 16:31:49 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/05 19:36:10 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ char				*ft_skipnchars(char *arr, size_t n);
 char				*ft_strsubptr(char const *str, char const *ptr);
 char				*ft_strjoinf(char *str1, char *str2);
 char 				*ft_str_tolower(char *str);
+char 				*ft_uint_itoa(unsigned int n);
 
 #endif
