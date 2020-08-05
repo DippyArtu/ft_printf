@@ -81,7 +81,8 @@ SRC =       ft_arrnew.c\
             ft_strdup_till_char.c\
             ft_skipnchars.c\
             ft_strsubptr.c\
-            ft_strjoinf.c
+            ft_strjoinf.c\
+            ft_str_tolower.c
 
 OBJ = $(SRC:.c=.o)
 OBJ_DIR = ./obj/
