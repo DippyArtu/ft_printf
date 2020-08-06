@@ -6,11 +6,9 @@
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 18:50:27 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/05 19:36:10 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/06 11:10:55 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "ft_printf.h"
 
@@ -65,7 +63,7 @@ int 				proccess_format(const char *str, va_list args)
 	while(1)
 	{
 		flags = init_flags();
-		if (!str)
+		if (!str[i])
 			break ;
 		else if (str[i] == '%' && str[i + 1])
 		{

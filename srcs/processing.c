@@ -6,7 +6,7 @@
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 21:44:39 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/05 19:38:32 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/06 11:00:07 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int 				is_in_type_list(int c)
 
 int 				is_in_flags_list(int c)
 {
-	return ((c == '-') || (c == ' ') || (c == '0') || (c == '.') || (c == '8'));
+	return ((c == '-') || (c == ' ') || (c == '0') || (c == '.') || (c == '*'));
 }
 
 int 				process_str(int c, t_flags flags, va_list args)
@@ -38,5 +38,11 @@ int 				process_str(int c, t_flags flags, va_list args)
 		count = process_int(va_arg(args, int), flags);
 	else if (c == 'u')
 		count = process_uint((unsigned int)va_arg(args, unsigned int), flags);
+	else if (c == 'x')
+		count = process_hex(va_arg(args, unsigned int), 1, flags);
+	else if (c == 'X')
+		count = process_hex(va_arg(args, unsigned int), 0, flags);
+	else if (c == '%')
+		count = process_percent(flags);
 	return (count);
 }

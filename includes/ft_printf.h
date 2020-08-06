@@ -6,7 +6,7 @@
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/21 18:48:43 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/05 19:49:54 by Artur            ###   ########.fr       */
+/*   Updated: 2020/08/06 10:39:35 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ char 				*ull_base(unsigned long long ull, int base);
 int 				process_pointer(unsigned long long ull, t_flags flags);
 int 				process_int(int i, t_flags flags);
 int 				process_uint(unsigned int uint, t_flags flags);
+int 				process_hex(unsigned int ui, int lower, t_flags flags);
+int 				process_percent(t_flags flags);
 
 #endif
