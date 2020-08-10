@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 14:34:39 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2019/09/16 11:19:59 by skennith          #+#    #+#             */
+/*   Updated: 2020/08/10 17:54:51 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_strclr(char *s)
+void	ft_strclr(char *s)
 {
-	int i;
-
 	if (!s)
 		return ;
-	i = ft_strlen(s);
-	ft_bzero(s, i);
+	while (*s)
+	{
+		*s = '\0';
+		s++;
+	}
 }

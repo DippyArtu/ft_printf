@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_width.c                                    :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/05 11:15:38 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/05 11:16:18 by Artur            ###   ########.fr       */
+/*   Created: 2019/11/01 16:38:39 by skennith          #+#    #+#             */
+/*   Updated: 2019/11/01 16:38:41 by skennith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int 				process_width(int width, int minus, int zero)
+int			ft_sqrt(int nb)
 {
-	int 			count;
+	int		i;
+	int		j;
 
-	count = 0;
-	while (width - minus > 0)
+	i = 0;
+	while (i <= nb)
 	{
-		if (zero)
-			ft_putchar('0');
+		j = i * i;
+		if (j == nb)
+			return (i);
+		else if (j < nb)
+			i++;
 		else
-			ft_putchar(' ');
-		width -= 1;
-		count++;
+			return (0);
 	}
-	return (count);
+	return (0);
 }

@@ -3,35 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 14:34:03 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2019/09/16 13:08:51 by skennith          #+#    #+#             */
+/*   Updated: 2020/08/10 17:54:51 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_putnbr(int i)
+void	ft_putnbr(int n)
 {
-	if (i == MININT)
-		write(1, "-2147483648", 11);
-	else
+	unsigned int	nbr;
+
+	nbr = (unsigned int)n;
+	if (n < 0)
 	{
-		if (i < 0)
-		{
-			write(1, "-", 1);
-			i *= -1;
-		}
-		if (i > 9)
-		{
-			ft_putnbr(i / 10);
-			ft_putnbr(i % 10);
-		}
-		else
-		{
-			i += 48;
-			write(1, &i, 1);
-		}
+		ft_putchar('-');
+		nbr = (unsigned int)n * -1;
 	}
+	if (nbr > 9)
+	{
+		ft_putnbr(nbr / 10);
+	}
+	ft_putchar((nbr % 10) + '0');
 }

@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrnew.c                                        :+:      :+:    :+:   */
+/*   ft_range.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 14:42:03 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2019/11/01 16:50:27 by skennith          #+#    #+#             */
+/*   Updated: 2019/11/01 16:50:29 by skennith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		**ft_arrnew(size_t size)
+int			*ft_range(int min, int max)
 {
-	char **ptr;
+	int		*x;
+	int		i;
+	int		a;
 
-	ptr = (char **)malloc(size * sizeof(char *));
-	if (ptr == NULL)
+	if (max > min)
 	{
-		free(ptr);
-		return (NULL);
+		i = 0;
+		a = min;
+		x = malloc(sizeof(int) * (max - min));
+		while (a < max)
+		{
+			x[i] = a;
+			a++;
+			i++;
+		}
+		return (x);
 	}
-	return (ptr);
+	else
+		return (NULL);
 }

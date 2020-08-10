@@ -3,23 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/26 13:49:25 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2020/08/10 17:57:27 by Artur             #+#    #+#             */
+/*   Updated: 2020/08/10 17:57:27 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# ifndef LIBFT_H
-#  include "libft.h"
-# endif
-# include <limits.h>
+# define BUFF_SIZE 1
 
-# define BUFF_SIZE 5
+# include "libft.h"
+# include <fcntl.h>
 
-int					get_next_line(int const fd, char **line);
+typedef struct					s_gnl_list
+{
+	int							fd;
+	char						*remainder;
+	struct s_gnl_list			*next;
+}								t_gnl;
+
+int								get_next_line(const int fd, char **line);
 
 #endif

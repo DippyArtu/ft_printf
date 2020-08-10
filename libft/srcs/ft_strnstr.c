@@ -3,35 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 14:36:41 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2019/09/13 16:32:04 by skennith          #+#    #+#             */
+/*   Updated: 2020/08/10 17:54:51 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strnstr(const char *h, const char *n, size_t len)
+char	*ft_strnstr(const char *str1, const char *str2, size_t len)
 {
-	size_t	i;
-	size_t	j;
+	size_t		i;
+	size_t		j;
+	size_t		a;
 
-	if (*n == '\0')
-		return ((char *)h);
 	i = 0;
-	while (h[i] != '\0' && i < len)
+	if (ft_strlen((char *)str2) == 0)
+		return ((char *)&str1[0]);
+	while (str1[i] && i < len)
 	{
-		if (h[i] == n[0])
+		j = 0;
+		a = i;
+		if (str1[i] == str2[j])
 		{
-			j = 1;
-			while (h[i + j] == n[j] && n[j] != '\0' && i + j < len)
+			while (str2[j] && str1[i] && str1[i] == str2[j] && (i < len))
 			{
+				i++;
 				j++;
 			}
-			if (n[j] == '\0')
-				return ((char *)(h + i));
+			if (str2[j] == '\0')
+				return ((char *)&str1[i - j]);
 		}
+		i = a;
 		i++;
 	}
 	return (NULL);

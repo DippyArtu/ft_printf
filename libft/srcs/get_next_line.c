@@ -3,88 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/26 16:12:49 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/20 01:02:20 by Artur            ###   ########.fr       */
+/*   Created: 2019/10/05 16:25:25 by skennith          #+#    #+#             */
+/*   Updated: 2020/08/10 17:54:51 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static size_t	ft_find_char(char *buff)
+static char			*check_r(char **r, char **np)
 {
-	size_t		position;
+	char			*str;
 
-	position = 0;
-	while (buff[position] != '\n' && buff[position] != '\0')
-		position++;
-	return (position);
-}
-
-static void		ft_update_buff(char *s1, const char *s2)
-{
-	int			i;
-
-	i = 0;
-	while (s2[i])
+	if ((*np = ft_strchr(*r, '\n')))
 	{
-		s1[i] = s2[i];
-		i++;
+		**np = '\0';
+		str = ft_strdup(*r);
+		ft_strcpy(*r, ++(*np));
 	}
-	ft_bzero((void *)(&s1[i]), BUFF_SIZE - i);
-}
-
-static int		ft_write_line(char **line, char *buff, size_t nl_pos)
-{
-	if (buff[nl_pos] == '\n' || (buff[0] == '\0' && *line[0] != '\0'))
+	else
 	{
-		if (buff[nl_pos] == '\n')
-			ft_update_buff(buff, &(buff[nl_pos + 1]));
-		return (1);
+		str = ft_strnew(ft_strlen(*r) + 1);
+		ft_strcat(str, *r);
+		ft_strclr(*r);
 	}
-	return (0);
+	return (str);
 }
 
-static char		*ft_strnjoin(char **line, const char *buff, size_t nl_pos)
+static int			gnl(const int fd, char **line, char **r)
 {
-	size_t		len;
-	char		*line_new;
-	char		*line_tmp;
+	int				i;
+	char			buf[BUFF_SIZE + 1];
+	char			*np;
+	char			*cl;
 
-	if (line == NULL || buff == NULL)
+	np = NULL;
+	*line = check_r(r, &np);
+	while (!np && (i = read(fd, buf, BUFF_SIZE)))
+	{
+		if (i < 0)
+			return (-1);
+		buf[i] = '\0';
+		if ((np = ft_strchr(buf, '\n')))
+		{
+			ft_strcpy(*r, ++np);
+			ft_strclr(--np);
+		}
+		cl = *line;
+		if (!(*line = ft_strjoin(*line, buf)))
+			return (-1);
+		ft_strdel(&cl);
+	}
+	return (ft_strlen(*r) || i || ft_strlen(*line) ? 1 : 0);
+}
+
+static t_gnl		*newt_gnl(int fd)
+{
+	t_gnl			*new;
+
+	if (!(new = (t_gnl *)malloc(sizeof(t_gnl))))
 		return (NULL);
-	line_tmp = *line;
-	len = ft_strlen(line_tmp);
-	if (!(line_new = ft_strnew(len + nl_pos + 1)))
-		return (NULL);
-	ft_memcpy(line_new, line_tmp, len);
-	ft_memcpy(line_new + len, buff, nl_pos);
-	free(line_tmp);
-	return (line_new);
+	new->fd = fd;
+	new->remainder = ft_strnew(BUFF_SIZE + 1);
+	new->next = NULL;
+	return (new);
 }
 
-int				get_next_line(const int fd, char **line)
+int					get_next_line(const int fd, char **line)
 {
-	size_t		nl_pos;
-	int			ret;
-	static char	buff[OPEN_MAX][BUFF_SIZE + 1];
+	static t_gnl	*first;
+	t_gnl			*tmp;
 
-	ret = 1;
-	if (fd < 0 || !line || fd > OPEN_MAX)
+	if (!line || fd < 0)
 		return (-1);
-	if (!(*line = ft_strnew(1)))
-		return (-1);
-	while (ret > 0)
+	if (!first)
+		first = newt_gnl(fd);
+	tmp = first;
+	while (tmp->fd != fd)
 	{
-		if (buff[fd][0] == '\0')
-			if ((ret = read(fd, &buff[fd], BUFF_SIZE)) < 0)
-				return (ret);
-		nl_pos = ft_find_char(buff[fd]);
-		*line = ft_strnjoin(line, buff[fd], nl_pos);
-		if (ft_write_line(line, buff[fd], nl_pos))
-			return (1);
-		ft_strclr((char *)&buff[fd]);
+		if (!tmp->next)
+			tmp->next = newt_gnl(fd);
+		tmp = tmp->next;
 	}
-	return (0);
+	return (gnl(tmp->fd, line, &tmp->remainder));
 }

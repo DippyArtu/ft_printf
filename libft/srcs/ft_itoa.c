@@ -3,38 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 14:30:02 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2019/09/23 19:06:05 by skennith          #+#    #+#             */
+/*   Updated: 2020/08/10 17:54:51 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_itoa(int n)
+static size_t		ft_count(unsigned int n, size_t i)
 {
-	size_t			i;
-	char			*out;
-	unsigned int	buff;
-	int				c;
-
-	i = 1;
-	c = n;
-	while (c /= 10)
-		i++;
-	buff = n;
-	if (n < 0)
+	if (n == 0)
+		return (++i);
+	while (n > 0)
 	{
-		buff = -n;
+		n = n / 10;
 		i++;
 	}
-	if (!(out = ft_strnew(i)))
-		return (NULL);
-	out[--i] = buff % 10 + 48;
-	while (buff /= 10)
-		out[--i] = buff % 10 + 48;
+	return (i);
+}
+
+static void			ft_addl(char *ch, size_t i, unsigned int nbr, int x)
+{
+	ch[i] = '\0';
+	i--;
+	if (nbr != 0)
+	{
+		while (nbr > 0)
+		{
+			ch[i--] = (nbr % 10) + '0';
+			nbr = nbr / 10;
+		}
+		if (x == 1)
+			ch[i] = '-';
+	}
+	else
+		ch[i] = '0';
+}
+
+char				*ft_itoa(int n)
+{
+	size_t			i;
+	int				x;
+	char			*ch;
+	unsigned int	nbr;
+
+	x = 0;
+	i = 0;
+	nbr = (unsigned int)n;
 	if (n < 0)
-		*(out) = '-';
-	return (out);
+	{
+		i++;
+		nbr = (unsigned int)n * -1;
+		x = 1;
+	}
+	i = ft_count(nbr, i);
+	if (!(ch = malloc(sizeof(char) * i + 1)))
+		return (NULL);
+	ft_addl(ch, i, nbr, x);
+	return (ch);
 }

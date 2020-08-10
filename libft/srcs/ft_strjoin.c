@@ -3,37 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 14:35:50 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2019/09/22 18:43:53 by skennith          #+#    #+#             */
+/*   Updated: 2020/08/10 17:54:51 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char			*ft_strjoin(char const *str1, char const *str2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char		*str3;
-	char		*tmp;
-	size_t		str1_c;
-	size_t		str2_c;
+	char	*str;
+	char	*res;
+	size_t	len;
 
-	str1_c = 0;
-	str2_c = 0;
-	if (!str1 || !str2)
+	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	while (str1[str1_c])
-		str1_c += 1;
-	while (str2[str2_c])
-		str2_c += 1;
-	if (!(str3 = (char *)malloc(sizeof(char) * (str1_c + str2_c + 1))))
+	len = ft_strlen(s1) + ft_strlen(s2);
+	if ((str = (char *)malloc(sizeof(char) * (len + 1))) == NULL)
 		return (NULL);
-	tmp = str3;
-	while (*str1 != '\0')
-		*tmp++ = *str1++;
-	while (*str2 != '\0')
-		*tmp++ = *str2++;
-	*tmp = '\0';
-	return (str3);
+	res = str;
+	while (*s1)
+	{
+		*str = *s1;
+		str++;
+		s1++;
+	}
+	while (*s2)
+	{
+		*str = *s2;
+		str++;
+		s2++;
+	}
+	*str = '\0';
+	return (res);
 }

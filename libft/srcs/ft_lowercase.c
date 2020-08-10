@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsplit_arrc.c                                 :+:      :+:    :+:   */
+/*   ft_lowercase.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 14:37:07 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2019/11/05 17:03:19 by skennith          #+#    #+#             */
+/*   Updated: 2019/11/05 17:03:20 by skennith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t			ft_strsplit_arrc(const char *s, char c)
+void	ft_lowercase(char *str)
 {
-	size_t i;
+	int	i;
 
-	i = 1;
-	while (*s)
+	i = 0;
+	while (str[i])
 	{
-		s++;
-		if (*s == c)
-		{
-			i++;
-			while (*s == c)
-				s++;
-		}
+		if (str[i] >= 'A' && str[i] <= 'Z')
+			str[i] += 32;
+		i++;
 	}
-	return (i);
 }

@@ -5,92 +5,114 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/21 18:50:27 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/06 11:10:55 by Artur            ###   ########.fr       */
+/*   Created: 2020/08/10 17:58:09 by Artur             #+#    #+#             */
+/*   Updated: 2020/08/10 17:58:09 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_flags				init_flags(void)
+static void		switch_print_value(t_pfstruct *data)
 {
-	t_flags			flags;
-
-	flags.dot = -1;
-	flags.minus = 0;
-	flags.star = 0;
-	flags.type = 0;
-	flags.width = 0;
-	flags.zero = 0;
-	return(flags);
+	if (data->fs.type == 'd' || data->fs.type == 'i')
+		print_int(data);
+	else if (data->fs.type == 'c')
+		print_char(data);
+	else if (data->fs.type == 's')
+		print_string(data);
+	else if (data->fs.type == '%')
+		print_percent(data);
+	else if (data->fs.type == 'u')
+		print_unsigned_int(data);
+	else if (data->fs.type == 'o')
+		print_octal(data);
+	else if (data->fs.type == 'x' || data->fs.type == 'X')
+		print_hex(data);
+	else if (data->fs.type == 'p')
+		print_pointer(data);
+	else if (data->fs.type == 'f')
+		print_float(data);
+	deinit(data);
 }
 
-int 				parse_flags(const char *str, int i, t_flags *flags, va_list args)
+static int		newfs(t_pfstruct *data, int step, int i, int r)
 {
-	while (str[i])
+	if (data->fs.str[i] == '.')
 	{
-		if (!ft_isdigit(str[i]) && !is_in_type_list(str[i])
-			&& !is_in_flags_list(str[i]))
-				break ;
-		else if (str[i] == '0' && flags->width == 0 && flags->minus == 0)
-			flags->zero = 1;
-		else if (str[i] == '.')
-			i = flag_dot(str, i,flags, args);
-		else if (str[i] == '-')
-			*flags = flag_minus(*flags);
-		else if (str[i] == '*')
-			*flags = flag_width(args, *flags);
-		else if (ft_isdigit(str[i]))
-			*flags = flag_number(str[i], *flags);
-		if (is_in_type_list(str[i]))
-		{
-			flags->type = str[i];
-			break ;
-		}
-		i++;
+		data->fs.pr_z = 1;
+		newfs(data, 3, i + 1, 0);
 	}
-	return (i);
+	else if (step == 1 && ft_strchr(FLAGSPF, data->fs.str[i]))
+		newfs(data, step, i + 1, set_flag(data, data->fs.str[i]));
+	else if (step == 2 && ft_strchr(WIDTHANDACCURACY, data->fs.str[i]))
+		newfs(data, step, i + 1, set_width(data, data->fs.str[i]));
+	else if (step == 3 && ft_strchr(WIDTHANDACCURACY, data->fs.str[i]))
+		newfs(data, step, i + 1, set_precision(data, data->fs.str[i]));
+	else if (step == 4 && ft_strchr(SIZEPF, data->fs.str[i]))
+	{
+		set_size(data, &i);
+		newfs(data, step, i + 1, 0);
+	}
+	else if (step == 5 && ft_strchr(TYPESPF, data->fs.str[i]))
+		data->fs.type = data->fs.str[i];
+	else if (step <= 5)
+		newfs(data, step + 1, i, 0);
+	return (data->fs.type + r);
 }
 
-int 				proccess_format(const char *str, va_list args)
+static char		*pars_fs(char *flag, t_pfstruct *data)
 {
-	int 			i;
-	t_flags			flags;
-	int 			count;
+	char		*dup;
+	int			i;
 
 	i = 0;
-	count = 0;
-	while(1)
+	dup = (char *)ft_memalloc(sizeof(flag));
+	while (ft_strchr(SYMBOLSINFS, *flag) && *flag)
 	{
-		flags = init_flags();
-		if (!str[i])
-			break ;
-		else if (str[i] == '%' && str[i + 1])
-		{
-			i = parse_flags(str, ++i, &flags, args);
-			if (is_in_type_list(str[i]))
-				count += process_str((char)flags.type, flags, args);
-			else if (str[i])
-				count += ft_putchar(str[i]);
-		}
-		else if (str[i] != '%')
-			count += ft_putchar(str[i]);
-		i++;
+		dup[i++] = *flag;
+		flag++;
 	}
-	return (count);
+	if (*flag && ft_strchr(TYPESPF, *flag))
+	{
+		dup[i] = *flag++;
+		data->fs.str = dup;
+	}
+	else
+		ft_strdel(&dup);
+	return (flag);
 }
 
-int 				ft_printf(const char *format, ...)
+static int		parsformat(t_pfstruct *data)
 {
-	const char 		*tmp;
-	va_list			args;
-	int 			c;
+	char *p;
 
-	tmp = ft_strdup(format);
-	c = 0;
-	va_start(args, format);
-	c += proccess_format(tmp, args);
-	va_end(args);
-	free((char *)tmp);
-	return (c);
+	p = &data->str[0];
+	while (*p)
+	{
+		if (*p && *p != '%')
+		{
+			data->pfreturn += write(1, p, 1);
+			p++;
+		}
+		else if (p++)
+		{
+			p = pars_fs(p, data);
+			if (data->fs.str)
+				if (newfs(data, 1, 0, 0))
+					switch_print_value(data);
+		}
+	}
+	return (data->pfreturn);
+}
+
+int				ft_printf(const char *format, ...)
+{
+	int			result;
+	t_pfstruct	data;
+
+	pf_init(&data);
+	va_start(data.args, format);
+	data.str = (char *)format;
+	result = parsformat(&data);
+	return (result);
 }

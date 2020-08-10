@@ -3,78 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 14:36:59 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2019/09/25 16:13:34 by skennith          #+#    #+#             */
+/*   Updated: 2020/08/10 17:54:51 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char			*ft_str_from_buff(char *arr, char *buff, size_t size)
+static size_t	ft_s(char const *s, char c)
 {
-	if (!(arr = ft_strnew(size + 1)))
-	{
-		free(arr);
-		return (NULL);
-	}
-	arr = ft_strcpy(arr, buff);
-	ft_bzero(buff, size);
-	return (arr);
-}
+	size_t i;
 
-static char			**ft_fill_arr(const char *s, char c, char **arr, char *buff)
-{
-	size_t	counter;
-	int		i;
-
-	counter = 0;
 	i = 0;
 	while (*s)
 	{
-		counter = 0;
-		while (*s == c)
-			s++;
-		while (*s != c && *s)
-		{
-			buff[counter] = *s;
-			counter++;
-			s++;
-		}
-		if (buff[0])
-		{
-			arr[i] = ft_str_from_buff(arr[i], buff, counter);
+		if ((*s != c && *(s + 1) == c) || (*s != c && *(s + 1) == '\0'))
 			i++;
-		}
+		s++;
 	}
-	arr[i] = 0;
-	return (arr);
+	return (i);
 }
 
-char				**ft_strsplit(char const *s, char c)
+static size_t	sizechr(const char *ch, char c)
 {
-	size_t	arr_i;
-	char	**fresh;
-	char	*buff;
+	size_t i;
 
-	if (s == NULL)
-		return (NULL);
-	if (!(buff = ft_strnew(1000)))
+	i = 0;
+	while (ch[i] && ch[i] != c)
+		i++;
+	return (i);
+}
+
+static void		arrclear(char **ch)
+{
+	while (*ch)
+		free(*ch++);
+	free(ch);
+}
+
+static char		**splitc(const char *s, char c, size_t count, char **ch)
+{
+	size_t		size;
+	int			x;
+	size_t		i;
+
+	x = 0;
+	i = 0;
+	while (count > 0)
 	{
-		free(buff);
-		return (NULL);
+		if (s[i] != c && count--)
+		{
+			size = sizechr(&s[i], c);
+			if (!(ch[x++] = ft_strsub(s, i, size)))
+			{
+				arrclear(ch);
+				return (NULL);
+			}
+			i += size;
+		}
+		i++;
 	}
-	arr_i = ft_strsplit_arrc(s, c);
-	if (arr_i > (arr_i + 1))
+	ch[x] = NULL;
+	return (ch);
+}
+
+char			**ft_strsplit(char const *s, char c)
+{
+	char		**ch;
+	size_t		count;
+
+	if (!s || !(ch = (char **)malloc((sizeof(char *) * ft_s(s, c)) + 1)))
 		return (NULL);
-	if (!(fresh = ft_arrnew(arr_i + 1)))
-	{
-		free(fresh);
+	count = ft_s(s, c);
+	if (count > count + 1)
 		return (NULL);
-	}
-	fresh = ft_fill_arr(s, c, fresh, buff);
-	free(buff);
-	buff = NULL;
-	return (fresh);
+	ch = splitc(s, c, count, ch);
+	return (ch);
 }

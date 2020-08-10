@@ -3,32 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 14:36:01 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2019/09/22 18:01:13 by skennith          #+#    #+#             */
+/*   Updated: 2020/08/10 17:54:51 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strmap(char const *s, char (*f)(char))
+char	*ft_strmap(char const *s, char (*f)(char))
 {
-	char	*fresh;
+	char	*res;
+	char	*a;
 	int		i;
-	size_t	len;
 
-	if (!s || !f)
-		return (0);
-	len = ft_strlen(s) + 1;
-	if (!(fresh = (char *)malloc(sizeof(char) * len)))
+	if (!s || !f || ft_strlen((char *)s) > (ft_strlen((char *)s) + 1))
+		return (NULL);
+	res = (char *)malloc(ft_strlen((char *)s) + 1);
+	a = (char *)s;
+	if (!res)
 		return (NULL);
 	i = 0;
-	while (s[i])
+	while (a[i])
 	{
-		fresh[i] = f(s[i]);
+		res[i] = f(a[i]);
 		i++;
 	}
-	fresh[i] = '\0';
-	return (fresh);
+	res[i] = '\0';
+	return (res);
 }

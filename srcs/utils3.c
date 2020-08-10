@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_skipnchars.c                                    :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Artur <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/31 18:48:24 by Artur             #+#    #+#             */
-/*   Updated: 2020/06/02 16:39:24 by Artur            ###   ########.fr       */
+/*   Created: 2020/08/10 17:59:00 by Artur             #+#    #+#             */
+/*   Updated: 2020/08/10 17:59:00 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <ft_printf.h>
 
-char		*ft_skipnchars(char *arr, size_t n)
+int				md(int i)
 {
-	if (!arr || !n)
-		return (NULL);
-	while (n && arr)
-	{
-		arr++;
-		n--;
-	}
-	return (arr);
+	return (i >= 0 ? i : i * -1);
+}
+
+long double		md_double(long double i)
+{
+	return (i >= 0 ? i : i * -1);
 }

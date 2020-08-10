@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Artur <Artur@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/21 18:48:43 by Artur             #+#    #+#             */
-/*   Updated: 2020/08/06 10:39:35 by Artur            ###   ########.fr       */
+/*   Created: 2020/08/10 17:57:21 by Artur             #+#    #+#             */
+/*   Updated: 2020/08/10 17:57:21 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,82 @@
 # include "libft.h"
 # include <stdarg.h>
 
-typedef struct 		s_flags
+# define SYMBOLSINFS "1234567890.+-#* lhL"
+# define TYPESPF "%cdifosuxXp"
+# define FLAGSPF "+#0 -"
+# define WIDTHANDACCURACY "0123456789*"
+# define SIZEPF "lhL"
+
+typedef struct		s_size
 {
-	int 			print_done;
-	int 			type;
-	int				width;
-	int 			minus;
-	int 			zero;
-	int 			dot;
-	int 			star;
+	int				l;
+	int				ll;
+	int				h;
+	int				hh;
+	int				big_l;
+
+}					t_size;
+
+typedef struct		s_flags
+{
+	int				zero;
+	int				minus;
+	int				plus;
+	int				space;
+	int				sharp;
 }					t_flags;
 
-int 				ft_printf(const char *format, ...);
-int 				proccess_format(const char *str, va_list args);
-t_flags				init_flags(void);
-int 				parse_flags(const char *str, int i, t_flags *flags, va_list args);
-int 				is_in_type_list(int c);
-int 				is_in_flags_list(int c);
-int 				flag_dot(const char *str, int start, t_flags *flags, va_list args);
-t_flags 			flag_minus(t_flags flags);
-t_flags 			flag_width(va_list args, t_flags flags);
-t_flags 			flag_number(char c, t_flags flags);
-int 				process_str(int c, t_flags flags, va_list args);
-int 				process_width(int width, int minus, int zero);
-int 				process_char(char c, t_flags flags);
-int 				put_str_adjusted(char *str, int step);
-int 				adjust_part(char *str, t_flags flags);
-int 				process_string(char *str, t_flags flags);
-char 				*ull_base(unsigned long long ull, int base);
-int 				process_pointer(unsigned long long ull, t_flags flags);
-int 				process_int(int i, t_flags flags);
-int 				process_uint(unsigned int uint, t_flags flags);
-int 				process_hex(unsigned int ui, int lower, t_flags flags);
-int 				process_percent(t_flags flags);
+typedef struct		s_fstring
+{
+	char			*fnl;
+	char			*str;
+	t_flags			flag;
+	int				wid;
+	int				precision;
+	t_size			size;
+	char			type;
+	char			sign;
+	int				pr_z;
+}					t_fstring;
+
+typedef struct		s_pfstruct
+{
+	va_list			args;
+	char			*str;
+	int				pfreturn;
+	t_fstring		fs;
+}					t_pfstruct;
+
+int					ft_printf(const char *format, ...);
+int					set_flag(t_pfstruct *data, char ch);
+int					set_size(t_pfstruct *data, int *i);
+int					set_width(t_pfstruct *data, char ch);
+int					set_precision(t_pfstruct *data, char ch);
+void				print_int(t_pfstruct *data);
+void				print_char(t_pfstruct *data);
+void				print_string(t_pfstruct *data);
+void				print_percent(t_pfstruct *data);
+void				print_unsigned_int(t_pfstruct *data);
+void				print_octal(t_pfstruct *data);
+void				print_hex(t_pfstruct *data);
+void				print_pointer(t_pfstruct *data);
+void				print_float(t_pfstruct *data);
+void				print_float2(t_pfstruct *data);
+
+int					write_chars(int i, char ch);
+char				*ft_itoa_base(uintmax_t num, uintmax_t not);
+void				precision_zero(t_pfstruct *data);
+int					ft_putstrcount(char const *s);
+int					md(int i);
+long double			md_double(long double i);
+void				sign_or_space(t_pfstruct *data);
+
+char				*power2(int pow);
+
+void				deinit(t_pfstruct *data);
+void				pf_init(t_pfstruct *data);
+
+char				*from_bin(char *str);
+char				*ft_ftoa_base2(long double num);
 
 #endif

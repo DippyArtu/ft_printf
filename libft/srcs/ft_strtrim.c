@@ -3,54 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsalome <jsalome@student.42.fr>            +#+  +:+       +#+        */
+/*   By: skennith <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 14:37:29 by jsalome           #+#    #+#             */
-/*   Updated: 2020/03/19 19:11:30 by Artur            ###   ########.fr       */
+/*   Created: 2019/09/22 19:36:09 by skennith          #+#    #+#             */
+/*   Updated: 2020/08/10 17:54:51 by Artur            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static size_t		ft_newlen(char const *s)
+char	*ft_strtrim(char const *s)
 {
-	size_t		len;
+	size_t	i;
+	size_t	a;
 
-	len = ft_strlen(s);
-	while (*s == 32 || *s == 10 || *s == 9)
-	{
-		len--;
-		s++;
-	}
-	while (*s != '\0')
-		s++;
-	s--;
-	if (len)
-		while (*s == 32 || *s == 10 || *s == 9)
-		{
-			len--;
-			s--;
-		}
-	return (len);
-}
-
-char				*ft_strtrim(char const *s)
-{
-	size_t		len;
-	char		*fresh;
-	char		*out;
-
-	if (s == NULL)
+	a = 0;
+	if (!s)
 		return (NULL);
-	len = ft_newlen(s);
-	fresh = (char *)malloc(sizeof(char) * (len + 1));
-	if (fresh == NULL)
-		return (NULL);
-	out = fresh;
-	while (*s == 32 || *s == 10 || *s == 9)
-		s++;
-	while (len--)
-		*fresh++ = *s++;
-	*fresh = '\0';
-	return (out);
+	while ((s[a] == ' ' || s[a] == '\n' || s[a] == '\t'))
+		a++;
+	i = ft_strlen(s) - 1;
+	while ((s[i] == ' ' || s[i] == '\n' || s[i] == '\t') && (i >= a))
+		i--;
+	if (i == a)
+		return (ft_strnew(1));
+	return (ft_strsub(s, a, i - a + 1));
 }
